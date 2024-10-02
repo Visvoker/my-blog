@@ -1,29 +1,23 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
-export interface ApiPostPost extends Struct.CollectionTypeSchema {
-  collectionName: 'posts';
+export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
+  collectionName: 'authors';
   info: {
-    singularName: 'post';
-    pluralName: 'posts';
-    displayName: 'Post';
-    description: '';
+    singularName: 'author';
+    pluralName: 'authors';
+    displayName: 'Author';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Schema.Attribute.String;
-    slug: Schema.Attribute.UID;
-    content: Schema.Attribute.Blocks;
-    excerpt: Schema.Attribute.String;
-    datePublished: Schema.Attribute.DateTime;
-    coverImage: Schema.Attribute.Media<
+    name: Schema.Attribute.String;
+    bio: Schema.Attribute.Blocks;
+    profilePicture: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    currentState: Schema.Attribute.Enumeration<
-      ['Draft', 'Published', 'Pending Review']
-    >;
+    socialLinks: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -32,7 +26,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::post.post'>;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::author.author'>;
   };
 }
 
@@ -886,7 +880,7 @@ export interface AdminTransferTokenPermission
 declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
-      'api::post.post': ApiPostPost;
+      'api::author.author': ApiAuthorAuthor;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
